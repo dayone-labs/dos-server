@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const passport = require('passport')
 const pg = require('pg')
+const winston = require('winston')
 const config = require('./config')
 
 const port = process.env.PORT || 9000
@@ -19,8 +20,8 @@ const dbConfig = {
 }
 
 const pool = new pg.Pool(dbConfig)
-pool.on('error', function (err, client) {
-	console.error('idle client error', err.message, err.stack)
+pool.on('error', function (err) {
+	winston.error('idle client error', err.message, err.stack)
 })
 
 module.exports = app
@@ -32,5 +33,5 @@ require('./config/routes')(app, passport, pool)
 app.listen(port, () => {
 	if(app.get('env') === 'test') return
 
-	console.log('Express app started on port ' + port)
+	winston.log('Express app started on port ' + port)
 })

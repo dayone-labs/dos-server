@@ -1,10 +1,11 @@
+const winston = require('winston')
 const LocalStrategy = require('passport-local').Strategy
 
-module.exports = function (passport, pool) {
+module.exports = (passport, pool) => {
 	passport.use(new LocalStrategy((username, password, cb) => {
 		pool.connect((err, client, done) => {
 			if(err) {
-				console.error('Error fetchning client from pool', err)
+				winston.error('Error fetchning client from pool', err)
 				return cb(err)
 			}
 
@@ -12,7 +13,7 @@ module.exports = function (passport, pool) {
 				done(err)
 
 				if(err) {
-					console.error('Error when selecting user on login', err)
+					winston.error('Error when selecting user on login', err)
 					return cb(err)
 				}
 
@@ -23,7 +24,7 @@ module.exports = function (passport, pool) {
 				}
 			})
 		})
-		}
+	}
 	))
 
 	passport.serializeUser((user, done) => {
@@ -33,7 +34,7 @@ module.exports = function (passport, pool) {
 	passport.deserializeUser((id, cb) => {
 		pool.connect((err, client, done) => {
 			if(err) {
-				console.error('error fetchning client from pool', err)
+				winston.error('error fetchning client from pool', err)
 				return cb(err)
 			}
 
@@ -41,7 +42,7 @@ module.exports = function (passport, pool) {
 				done(err)
 
 				if(err) {
-					console.error('Error when selecting user on session deserialize', err)
+					winston.error('Error when selecting user on session deserialize', err)
 					return cb(err)
 				}
 
