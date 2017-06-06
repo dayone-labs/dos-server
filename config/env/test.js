@@ -1,3 +1,4 @@
 module.exports = {
-	db: {}
+	db: {},
+	session_secret: 'test'
 }
