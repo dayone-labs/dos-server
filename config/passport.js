@@ -1,5 +1,8 @@
+const bcrypt = require('bcrypt')
 const winston = require('winston')
 const LocalStrategy = require('passport-local').Strategy
+
+const saltRounds = 10
 
 module.exports = (passport, pool) => {
 	passport.use(new LocalStrategy((username, password, cb) => {
@@ -9,7 +12,7 @@ module.exports = (passport, pool) => {
 				return cb(err)
 			}
 
-			client.query('SELECT id, username FROM users WHERE username=$1 AND password=$2', [username, password], (err, result) => {
+			client.query('SELECT id, username, password FROM users WHERE username=$1', [username], (err, result) => {
 				done(err)
 
 				if(err) {
@@ -18,7 +21,14 @@ module.exports = (passport, pool) => {
 				}
 
 				if(result.rows.length > 0) {
-					cb(null, result.rows[0])
+					const first = result.rows[0]
+					bcrypt.compare(password, first.password, function(err, res) {
+						if(res) {
+							cb(null, { id: first.id, username: first.username })
+						} else {
+							cb(null, false)
+						}
+					})
 				} else {
 					cb(null, false)
 				}
