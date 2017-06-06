@@ -27,7 +27,7 @@ pool.on('error', function (err) {
 module.exports = app
 
 require('./config/passport')(passport, pool)
-require('./config/express')(app, passport)
+require('./config/express')(app, passport, pool)
 require('./config/routes')(app, passport, pool)
 
 app.listen(port, () => {

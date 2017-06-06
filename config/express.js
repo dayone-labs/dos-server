@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser')
 const expressValidator = require('express-validator')
 const session = require('express-session')
+const pgSession = require('connect-pg-simple')(session)
 const cookieParser = require('cookie-parser')
 const methodOverride = require('method-override')
 const morgan = require('morgan')
@@ -9,7 +10,7 @@ const config = require('./')
 
 const env = process.env.NODE_ENV || 'development'
 
-module.exports = (app, passport) => {
+module.exports = (app, passport, pool) => {
 	let log = 'dev'
 	if (env !== 'development') {
 		log = {
@@ -35,9 +36,12 @@ module.exports = (app, passport) => {
 
 	app.use(cookieParser())
 	app.use(session({
+		store: new pgSession({
+			pool
+		}),
 		secret: config.session_secret,
 		resave: false,
-		saveUninitialized: false
+		cookie: { maxAge: 14 * 24 * 60 * 60 * 1000 }
 	}))
 
 	app.use(passport.initialize())
