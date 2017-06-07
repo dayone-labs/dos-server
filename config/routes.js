@@ -1,6 +1,7 @@
 const winston = require('winston')
 const { requiresLogin, requiresAdmin } = require('./middlewares/authorization')
 const users = require('../app/users')
+const monitoring = require('../app/monitoring')
 
 module.exports = (app, passport, pool) => {
 	app.post('/api/login', passport.authenticate('local'), users.login)
@@ -22,6 +23,8 @@ module.exports = (app, passport, pool) => {
 	app.get('/admin/panel', requiresAdmin, (req, res) => {
 		res.render('admin-panel')
 	})
+
+	app.get('/health', monitoring.health(pool))
 
 	app.use(function (err, req, res, next) {
 		if (err.message && (~err.message.indexOf('not found'))) {
