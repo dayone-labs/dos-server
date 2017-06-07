@@ -1,5 +1,6 @@
 const winston = require('winston')
 const { requiresLogin, requiresAdmin } = require('./middlewares/authorization')
+const admin = require('../app/admin')
 const users = require('../app/users')
 const monitoring = require('../app/monitoring')
 
@@ -8,21 +9,9 @@ module.exports = (app, passport, pool) => {
 	app.get('/api/logout', users.logout)
 	app.get('/api/ping', requiresLogin, users.ping)
 
-	app.get('/admin/login', (req, res) => {
-		res.render('login')
-	})
-
-	app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login' }), (req, res) => {
-		if(req.user.type === 'admin') {
-			res.redirect('/admin/panel')
-		} else {
-			res.redirect('/admin/login')
-		}
-	})
-
-	app.get('/admin/panel', requiresAdmin, (req, res) => {
-		res.render('admin-panel')
-	})
+	app.get('/admin/login', admin.renderLogin)
+	app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login' }), admin.login)
+	app.get('/admin/panel', requiresAdmin, admin.renderPanel)
 
 	app.get('/health', monitoring.health(pool))
 
