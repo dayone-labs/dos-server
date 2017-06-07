@@ -1,4 +1,7 @@
+const path = require('path')
 const bodyParser = require('body-parser')
+const express = require('express')
+const expressHandlebars = require('express-handlebars')
 const expressValidator = require('express-validator')
 const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session)
@@ -21,6 +24,10 @@ module.exports = (app, passport, pool) => {
 	}
 
 	if (env !== 'test') app.use(morgan(log))
+
+	app.engine('handlebars', expressHandlebars())
+	app.set('views', path.join(config.root, 'views'))
+	app.set('view engine', 'handlebars')
 
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: true }))
@@ -46,4 +53,6 @@ module.exports = (app, passport, pool) => {
 
 	app.use(passport.initialize())
 	app.use(passport.session())
+
+	app.use('/', express.static(path.join(config.root, 'public')))
 }

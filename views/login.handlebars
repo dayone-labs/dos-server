@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>DayOne - Admin panel</title>
+		<link href="/main.css" rel="stylesheet" >
+	</head>
+	<body>
+		<div class='container'>
+			<form class='login-form' name='login' action='/admin/login' method='POST' >
+				<div>
+					<div>
+						<img class='logo' src='/images/logo.png' alt='Logo'/>
+					</div>
+					<div>
+						<div class='relative'>
+							<input placeholder='username' name='username' required/>
+						</div>
+						<div class='relative'>
+							<input placeholder='password' type='password' name='password' required/>
+						</div>
+					</div>
+				</div>
+				<button type='submit'>
+					Log in
+				</button>
+			</form>
+		</div>
+	</body>
+</html>

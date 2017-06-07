@@ -12,7 +12,7 @@ module.exports = (passport, pool) => {
 				return cb(err)
 			}
 
-			client.query('SELECT id, username, password FROM users WHERE username=$1', [username], (err, result) => {
+			client.query('SELECT id, username, password, type FROM users WHERE username=$1', [username], (err, result) => {
 				done(err)
 
 				if(err) {
@@ -22,9 +22,10 @@ module.exports = (passport, pool) => {
 
 				if(result.rows.length > 0) {
 					const first = result.rows[0]
+					console.log(first)
 					bcrypt.compare(password, first.password, function(err, res) {
 						if(res) {
-							cb(null, { id: first.id, username: first.username })
+							cb(null, { id: first.id, username: first.username, type: first.type })
 						} else {
 							cb(null, false)
 						}
@@ -48,7 +49,7 @@ module.exports = (passport, pool) => {
 				return cb(err)
 			}
 
-			client.query('SELECT id, username FROM users WHERE id = $1', [parseInt(id, 10)], (err, results) => {
+			client.query('SELECT id, username, type FROM users WHERE id = $1', [parseInt(id, 10)], (err, results) => {
 				done(err)
 
 				if(err) {

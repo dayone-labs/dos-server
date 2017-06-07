@@ -1,0 +1,50 @@
+body {
+	background-color: #f7f9f8;
+}
+
+.container {
+	width: 360px;
+	padding: 8% 0 0;
+	margin: auto;
+}
+
+.login-form {
+	position: relative;
+	background: #2c3343;
+	padding: 45px;
+	text-align: center;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.login-form input {
+	background: #f2f2f2;
+	width: 100%;
+	border: 0;
+	margin: 0 0 15px;
+	padding: 15px;
+
+	font-size: 14px;
+}
+
+.login-form button {
+	color: white;
+	text-transform: uppercase;
+	background-color: #42b8ac;
+	width: 100%;
+	border: 0;
+	padding: 15px;
+	font-size: 14px;
+	transition: all 0.3 ease;
+}
+
+.login-form button:hover, .login-form button:active, .login-form button:focus {
+	background-color: #42b8ac;
+}
+
+.logo {
+	margin-bottom: 30px;
+}
+
+.relative {
+	position: relative;
+}
