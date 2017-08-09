@@ -6,3 +6,10 @@ CREATE TABLE "session" (
 WITH (OIDS=FALSE);
 
 ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+CREATE TABLE "users" (
+	"id" bigserial PRIMARY KEY,
+	"username" varchar(255),
+	"password" varchar(100),
+	"type" varchar(50)
+);
