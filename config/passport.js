@@ -2,8 +2,6 @@ const bcrypt = require('bcrypt')
 const winston = require('winston')
 const LocalStrategy = require('passport-local').Strategy
 
-const saltRounds = 10
-
 module.exports = (passport, pool) => {
 	passport.use(new LocalStrategy((username, password, cb) => {
 		pool.connect((err, client, done) => {
@@ -22,7 +20,6 @@ module.exports = (passport, pool) => {
 
 				if(result.rows.length > 0) {
 					const first = result.rows[0]
-					console.log(first)
 					bcrypt.compare(password, first.password, function(err, res) {
 						if(res) {
 							cb(null, { id: first.id, username: first.username, type: first.type })

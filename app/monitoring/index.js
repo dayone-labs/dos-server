@@ -1,3 +1,5 @@
+const winston = require('winston')
+
 module.exports = {
 	health: (pool) => (req, res, next) => {
 		pool.connect((err, client, done) => {
