@@ -17,7 +17,8 @@
     "cross-env": "5.0.0",
     "eslint": "3.19.0",
     "jest": "20.0.3",
-    "nodemon": "1.11.0"
+    "nodemon": "1.11.0",
+    "supertest": "3.0.0"
   },
   "dependencies": {
     "bcrypt": "1.0.2",
