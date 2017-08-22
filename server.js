@@ -22,14 +22,20 @@ pool.on('error', function (err) {
 	winston.error('idle client error', err.message, err.stack)
 })
 
-module.exports = app
-
 require('./config/passport')(passport, pool)
 require('./config/express')(app, passport, pool)
 require('./config/routes')(app, passport, pool)
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
 	if(app.get('env') === 'test') return
 
 	winston.log('Express app started on port ' + port)
+})
+
+server.on('close', () => {
+	winston.log('Closed express server')
+
+	pool.end(() => {
+		winston.log('Shut down connection pool')
+	})
 })
