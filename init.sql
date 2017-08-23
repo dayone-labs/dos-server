@@ -9,7 +9,7 @@ ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFE
 
 CREATE TABLE "users" (
 	"id" bigserial PRIMARY KEY,
-	"username" varchar(255),
+	"username" varchar(255) UNIQUE,
 	"password" varchar(100),
 	"type" varchar(50)
 );
