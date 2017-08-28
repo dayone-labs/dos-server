@@ -1,4 +1,4 @@
-DOS is a boilerplate stack for building Node.js projects.
+## DOS is a boilerplate stack for building Node.js projects with Express & Posgres
 
 DOS helps you start building Node.js projects faster. DOS is a boilerplate project with minimal set of configured dependencies to let you start with Node.js using Express, Postgres & Passport. 
 
@@ -30,33 +30,33 @@ Users in DB:
 Passport with LocalStrategy & Postgres is configured for login endpoints. Since registration is often app & domain specific, there is no configuration for registration endpoint. The easiest way to see how admin site work, you need to insert manually. You need to generate password for admin using `bcrypt`. In project directory run `node` and then:
 
 ```
-	const bcrypt = require('bcrypt')
-	const pass = 'you password goes here'
-	const saltRounds = 10 //the higher the better - the longer it takes to generate & compare
-	bcrypt.hashSync(pass, saltRounds)
+const bcrypt = require('bcrypt')
+const pass = 'you password goes here'
+const saltRounds = 10 //the higher the better - the longer it takes to generate & compare
+bcrypt.hashSync(pass, saltRounds)
 ```
 
 You'll get generated password and now you need to insert user to DB.
 
 ```
-	INSERT INTO users(username, password, type) VALUES ('username', 'password', 'admin');
+INSERT INTO users(username, password, type) VALUES ('username', 'password', 'admin');
 ```
 
 Commands:
 
 * Start server:
 ```
-	npm start
+npm start
 ```
 
 * Debug server:
 ```
-	npm run debug
+npm run debug
 ```
 
 * Test
 ```
-	npm test
+npm test
 ```
 
 Used packages: 
