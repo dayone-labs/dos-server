@@ -2,7 +2,7 @@
 
 DOS helps you start building Node.js projects faster. DOS is a boilerplate project with minimal set of configured dependencies to let you start with Node.js using Express, Postgres & Passport. 
 
-Features:
+### Features:
 
 * Express with JSON body parser, cookie parser, session
 * global error handling for 404 & 500 
@@ -16,7 +16,7 @@ Features:
 * loggers
 * test runner using Jest
 
-How to start:
+### How to start:
 
 1. Clone repository
 1. Run ```npm install```
@@ -25,7 +25,7 @@ How to start:
 1. Run ```npm test``` to check if everything works
 1. Enjoy & build great apps 😀 
 
-Users in DB:
+### Users in DB:
 
 Passport with LocalStrategy & Postgres is configured for login endpoints. Since registration is often app & domain specific, there is no configuration for registration endpoint. The easiest way to see how admin site work, you need to insert manually. You need to generate password for admin using `bcrypt`. In project directory run `node` and then:
 
@@ -42,7 +42,7 @@ You'll get generated password and now you need to insert user to DB.
 INSERT INTO users(username, password, type) VALUES ('username', 'password', 'admin');
 ```
 
-Commands:
+### Commands:
 
 * Start server:
 ```
@@ -59,7 +59,7 @@ npm run debug
 npm test
 ```
 
-Used packages: 
+### Used packages: 
 
 - bcrypt -> https://github.com/kelektiv/node.bcrypt.js/ - One of the most fundamental security concern is storing passwords in application. In DOS we're using bcypt to generate salt and hash passwords. bcrypt is a password hashing function. bcrypt uses salt to protect against rainbow table attacks. What is crucial, bcrypt is adaptive function -> over time the iteration time can be increased in order to make it slower to remain resistant to increasing computation power. NPM package is using native implementation of bcrypt. 
 
@@ -89,3 +89,11 @@ Used packages:
 
 - winston -> https://github.com/winstonjs/winston - Logging library for Node.js with support for multiple transports. Winston provides many features beside normal `console` statements like default & custom loggers, multiple transports, streaming logs, different log levels.
 
+### Authors
+
+Marek Piechut [@marekpiechut](http://twitter.com/@marekpiechut)
+Bartek Witczak [@bartekwitczak](http://twitter.com/@bartekwitczak)
+
+### License
+
+DOS starter kit is licensed under the MIT License so you can use it in free, opensource and commercial projects. Whichever you like. See [LICENSE.md] for details
