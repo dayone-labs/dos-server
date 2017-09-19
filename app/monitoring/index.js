@@ -1,23 +1,14 @@
 const winston = require('winston')
 
 module.exports = {
-	health: (pool) => (req, res, next) => {
-		pool.connect((err, client, done) => {
+	health: (db) => (req, res, next) => {
+		db.query('SELECT 1', (err) => {
 			if(err) {
-				winston.error('Error fetching client from pool on health check', err)
+				winston.error('Error running health check query on DB', err)
 				return next(err)
 			}
 
-			client.query('SELECT 1', (err) => {
-				done(err)
-
-				if(err) {
-					winston.error('Error running health check query on DB', err)
-					return next(err)
-				}
-
-				res.sendStatus(200)
-			})
+			res.sendStatus(200)
 		})
 	}
 }

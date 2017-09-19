@@ -1,30 +1,14 @@
 const express = require('express')
 const passport = require('passport')
-const pg = require('pg')
 const winston = require('winston')
-const config = require('./config')
+const db = require('./db')
 
 const port = process.env.PORT || 9000
 const app = express()
 
-const dbConfig = {
-	user: config.db.user,
-	password: config.db.password,
-	database: config.db.database,
-	host: config.db.host,
-	port: config.db.port,
-	max: config.db.max,
-	idleTimeoutMillis: config.db.idleTimeoutMillis,
-}
-
-const pool = new pg.Pool(dbConfig)
-pool.on('error', function (err) {
-	winston.error('idle client error', err.message, err.stack)
-})
-
-require('./config/passport')(passport, pool)
-require('./config/express')(app, passport, pool)
-require('./config/routes')(app, passport, pool)
+require('./config/passport')(passport, db)
+require('./config/express')(app, passport, db.pool)
+require('./config/routes')(app, passport, db)
 
 const server = app.listen(port, () => {
 	if(app.get('env') === 'test') return
@@ -35,7 +19,7 @@ const server = app.listen(port, () => {
 server.on('close', () => {
 	winston.log('Closed express server')
 
-	pool.end(() => {
+	db.pool.end(() => {
 		winston.log('Shut down connection pool')
 	})
 })
